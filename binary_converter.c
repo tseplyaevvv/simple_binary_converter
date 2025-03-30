@@ -39,9 +39,7 @@ void divide_by_2(char *inp) {
 	char *inp0;
 	int started;
 	
-	for (int i = 0; i < bitarrlen; i++) {
-        bits[i] = '0';
-    }
+	for (int i = 0; i < bitarrlen; i++) bits[i] = '0';
 	
 	while (loopcount < bitarrlen+10) {
 		loopcount++;
