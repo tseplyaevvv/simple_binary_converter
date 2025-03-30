@@ -27,22 +27,30 @@ int arrlen(const char *str) {
 }
 
 void divide_by_2(char *inp) {
-	
 	int inplen = arrlen(inp);
 	char result[inplen];
 	int bitarrlen = (int)(inplen * 3.32193 - 1)+2;
 	char bits[bitarrlen];
 	int kek = bitarrlen;
 	int loopcount = 0;
+	int temp;
+	int cnt;
+	char *res;
+	char *inp0;
+	int started;
+	
+	for (int i = 0; i < bitarrlen; i++) {
+        bits[i] = '0';
+    }
+	
 	while (loopcount < bitarrlen+10) {
 		loopcount++;
 		if (loopcount > bitarrlen+5)
 			printf("!!! WE HAVE A PROBLEM !!!");
-		int temp = 0;
-		int cnt;
-		char *res = result;
-		char *inp0 = inp;
-		int started = 0;
+		temp = 0;
+		res = result;
+		inp0 = inp;
+		started = 0;
 		
 		while (*inp != '\0') {
 			temp = temp * 10 + (*inp - '0');
