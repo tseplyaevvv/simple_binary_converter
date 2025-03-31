@@ -7,7 +7,7 @@ int count_leading_0s(const char *num) {
     return count;
 }
 
-int arrcomp(const char *str) {
+int compare_with_0(const char *str) {
     
 	if (str == NULL) return 0;
 	while (*str) {
@@ -26,7 +26,7 @@ int arrlen(const char *str) {
     return length;
 }
 
-void divide_by_2(char *inp) {
+void divide_by_2(char *inp, char *outp) {
 	int inplen = arrlen(inp);
 	char result[inplen];
 	int bitarrlen = (int)(inplen * 3.32193 - 1)+2;
@@ -88,13 +88,20 @@ void divide_by_2(char *inp) {
         bits[i] = '0';
     }
 	char *out = bits+leadings;
-	printf("%s", out);
+	
+	for (;*out!='\0';*out++,*outp++) *outp = *out;
+	*outp='.';
 }
 
-void multiply_by_2(char *num, char *result, int prec) {
-	if (*num == '\0') return;
-	printf(".");
+void multiply_by_2(char *num, char *result, int prec, char *buf) {
+	while (*buf!='.') buf++;
+	if (*num == '\0') {
+		*buf = '\0';
+		return;
+	}
+	
 	while (prec){
+		buf++;
 		int length = arrlen(num);
 		int carry = 0;
     
@@ -106,14 +113,15 @@ void multiply_by_2(char *num, char *result, int prec) {
 			result[i] = (product % 10) + '0';
 		}
     
-		if (carry > 0)
-			printf("1");
-		else printf("0");
+		if (carry) *buf='1';
+		else *buf='0';
 		
-		if (arrcomp(result)) break;
+		if (compare_with_0(result)) break;
 		num = result;
 		prec--;
 	}
+	buf++;
+	*buf = '\0';
 }
 
 int check_1(char *arr) {
@@ -140,18 +148,23 @@ void main() {
 	int maxlen;
 	int dot;
     
-	printf("\nMax input length: ");
+	printf("\n(int) Max input length: ");
 	scanf("%d", &maxlen);
 	char teststr[maxlen]; 
 	
 	int prec;
-	printf("\nBinary places: ");
+	printf("\n(int) Binary places: ");
 	scanf("%d", &prec);
 	char result[prec];
 	char neg;
 	char *rem;
 	
+	const int buflen = maxlen + prec;
+	char buffer[buflen];
+	
+	
 	while (1){
+		for(int i = 0; i<buflen ;i++)buffer[i]= '0';
 		neg = 0;
 		printf("\n\n-----------------------\nInput: ");
 		scanf("%s", teststr);
@@ -169,10 +182,14 @@ void main() {
 	
 		if (dot) {
 			
-			printf("\nResult: ");
-			if (neg) printf("-");
-			divide_by_2(teststr + count_leading_0s(teststr));
-			multiply_by_2(rem, result, prec);
+			if (neg) buffer[0] = '-';
+			divide_by_2(teststr + count_leading_0s(teststr),buffer+neg);
+			multiply_by_2(rem, result, prec, buffer+neg);
+			
+			printf("\nResult: %s",buffer);
+			
+			//printf("\n\n"); // to print all of the buffer
+			//for (int i = 0;i < buflen;i++) printf("%c",buffer[i]);
 		
 		} else {
 			printf("Invalid array.\n");
