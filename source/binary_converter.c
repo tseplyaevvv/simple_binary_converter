@@ -23,7 +23,7 @@ int arrlen(const char *str) {
 
 void divide_by_2(char *inp, char *outp) {
 	char result[arrlen(inp)];
-	const int bitarrlen = (int)(arrlen(inp) * 3.32193 - 1)+2;
+	const int bitarrlen = (int)(arrlen(inp) * 3.32193 - 1) + 2;
 	char bits[bitarrlen];
 	int kek = bitarrlen;
 	
@@ -36,20 +36,19 @@ void divide_by_2(char *inp, char *outp) {
 		
 		for (int temp = 0; *inp != '\0'; inp++) {
 			temp = temp * 10 + (*inp - '0');
-			if (temp >= 2) { 
-				int cnt = temp / 2; 
-				temp = temp % 2; 
+			if (temp >= 2) {
+				int cnt = temp / 2;
+				temp = temp % 2;
 				*res++ = cnt + '0'; 
-				started = 1; 
-			} else if (started) { 
-				*res++ = '0'; 
-			}
+				started = 1;
+			} else
+				if (started)
+					*res++ = '0';
 		}
 		inp--;
 		kek--;
-		
-		if (kek==bitarrlen-1){
-			bits[kek]=*inp%2+'0';
+		if (kek == bitarrlen - 1){
+			bits[kek] = *inp % 2 + '0';
 			kek--;
 		}
 		if (!started) { 
@@ -69,13 +68,14 @@ void divide_by_2(char *inp, char *outp) {
         bits[i] = '0';
     }
 	char *out = bits + leadings;
-	for (;*out!='\0';*out++,*outp++) *outp = *out;
-	*outp='.';
+	for (; *out != '\0'; *out++, *outp++)
+		*outp = *out;
+	*outp = '.';
 }
 
 void multiply_by_2(char *num, int prec, char *buf) {
 	char result[prec];
-	while (*buf!='.') buf++;
+	while (*buf != '.') buf++;
 	if (*num == '\0') {
 		*buf = '\0';
 		return;
@@ -92,8 +92,8 @@ void multiply_by_2(char *num, int prec, char *buf) {
 			result[i] = (product % 10) + '0';
 		}
     
-		if (carry) *buf='1';
-		else *buf='0';
+		if (carry) *buf = '1';
+		else *buf = '0';
 		
 		if (it_is_0(result)) break;
 		num = result;
@@ -109,7 +109,7 @@ int check(char *arr) {
             if (arr[i] == '.') {
 				arr[i] = '\0';
 				if (flag) return 0;
-				flag = i+1;
+				flag = i + 1;
 			}
 		} else return 0;
 		i++;
@@ -135,7 +135,7 @@ void main() {
 		scanf("%s", teststr);
 		
 		for(int i = 0; i<buflen; i++)
-			buffer[i]= '0';
+			buffer[i] = '0';
 		
 		char neg = 0;
 		
@@ -150,7 +150,7 @@ void main() {
 	
 		if (dot) {
 			if (neg) buffer[0] = '-';
-			divide_by_2(teststr + count_leading_0s(teststr),buffer+neg);
+			divide_by_2(teststr + count_leading_0s(teststr), buffer + neg);
 			multiply_by_2(rem, prec, buffer+neg);
 			printf("\nResult: %s",buffer);
 			
