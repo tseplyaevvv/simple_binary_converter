@@ -9,9 +9,9 @@ Here is an examle of using the program.
 Welcome! This program is aimed to convert decimal numbers to binary.
 Use "exit" to finish.
 
-Max input length: 120
+(int) Max input length: 120
 
-Binary places: 12
+(int) Binary places: 12
 
 
 -----------------------
