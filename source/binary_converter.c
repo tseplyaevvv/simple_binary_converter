@@ -30,7 +30,7 @@ void divide_by_2(char *inp, char *outp) {
 	for (int i = 0; i < bitarrlen; i++) bits[i] = '0';
 	
 	// This for should exit through break!
-	for (int i = 0; i < bitarrlen+10; i++) {
+	for (int i = 0; i < bitarrlen + 10; i++) {
 		char *res = result;
 		int started = 0;
 		
@@ -101,18 +101,18 @@ void multiply_by_2(char *num, int prec, char *buf) {
 	*++buf = '\0';
 }
 
-int check(char *arr) {
+int check(char *arr, int maxlen) {
 	int i = 0;
 	char flag = 0;
-    while (arr[i] != '\0') {
+    for (; arr[i] != '\0'; i++) {
         if ((arr[i] >= '0' && arr[i] <= '9') || arr[i] == '.'){
+			if (i >= maxlen) return 0;
             if (arr[i] == '.') {
 				arr[i] = '\0';
 				if (flag) return 0;
 				flag = i + 1;
 			}
 		} else return 0;
-		i++;
     }
 	if (!flag) flag = i;
     return flag;
@@ -134,7 +134,7 @@ void main() {
 		printf("\n\n-----------------------\nInput: "); 
 		scanf("%s", teststr);
 		
-		for(int i = 0; i<buflen; i++)
+		for(int i = 0; i < buflen; i++)
 			buffer[i] = '0';
 		
 		char neg = 0;
@@ -144,19 +144,19 @@ void main() {
 			neg = 1;
 		}
 		
-		int dot = check(teststr);
+		int dot = check(teststr, maxlen);
 	
 		char *rem = teststr + dot;
 	
 		if (dot) {
 			if (neg) buffer[0] = '-';
 			divide_by_2(teststr + count_leading_0s(teststr), buffer + neg);
-			multiply_by_2(rem, prec, buffer+neg);
+			multiply_by_2(rem, prec, buffer + neg);
 			printf("\nResult: %s",buffer);
 			
 			//printf("\n\n"); // to print all of the buffer
 			//for (int i = 0;i < buflen;i++) printf("%c",buffer[i]);
 		
-		} else printf("Invalid array.\n");
+		} else printf("\nInvalid number format!");
 	}
 }
