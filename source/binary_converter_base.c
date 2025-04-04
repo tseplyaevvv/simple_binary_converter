@@ -1,6 +1,24 @@
 #include <stdio.h>
 #include "binary_converter_base.h"
 
+int custom_strcmp(const char *s1, const char *s2) {
+    while (*s1 && (*s1 == *s2)) {
+        s1++;
+        s2++;
+    }
+    return (*s1 - *s2);
+}
+
+int already_there(char *array, int num_strings, int string_length, const char *target) {
+    for (int i = 0; i < num_strings; i++) {
+        char *current_string = array + (i * string_length);
+        if (custom_strcmp(current_string, target) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 int count_leading_0s(const char *num) {
     int count = 0;
     if (num == NULL || *num == '\0') return 0;
