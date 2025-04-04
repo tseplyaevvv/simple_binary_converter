@@ -28,13 +28,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     case WM_COMMAND:
         if (LOWORD(wParam) == ID_BUTTON) {
             char input1[9], inpstr[MAX_INPUT_LENGTH];
-            int prec, result;
 
             GetWindowText(hInput1, input1, sizeof(input1));
             GetWindowText(hString, inpstr, sizeof(inpstr));
 
-            prec = atoi(input1);
-            result = prec;
+            int prec = atoi(input1);
 			
 			int buflen = MAX_INPUT_LENGTH + prec;
 			if (prec < 0) buflen = 100;
@@ -50,16 +48,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 			}
 			
 			int dot = check(inpstr, MAX_INPUT_LENGTH);
-			
 			char *rem = inpstr + dot;
-			
-			
 
 			if (prec < 0)
 				snprintf(buffer, sizeof(buffer), "Precision must not be negative!");
 			else
 			{
-				//snprintf(buffer, sizeof(buffer), "Result: %d, String: %s", result, inpstr);
 				if (dot) {
 					if (neg) buffer[0] = '-';
 					divide_by_2(inpstr + count_leading_0s(inpstr), buffer + neg);
