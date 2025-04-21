@@ -30,22 +30,29 @@ void main() {
 		
 		int do_not_write = 0;
 		char *dec_1 = *set_dec;
+		
+		if(*inpstr == 'h'){
+			printf("\n");
+			getchar();
+			for(int i = 0; i < a;i++){
+				printf(set_dec[i]);
+				printf("\n");
+				printf(set_bin[i]);
+				printf("\n\n");
+				if (i % 4 == 0 && i){
+					printf("\nPress ENTER ...");
+					getchar();
+				}
+			};
+			continue;
+		}
+		
 		if (already_there(dec_1, histlen, maxlen, inpstr)){
 			printf("(has been entered before)\n");
 			a--;
 			do_not_write = 1;
 		}else snprintf(set_dec[a], maxlen, inpstr);
 		
-		if(*inpstr == 'h'){
-			printf("\n");
-			for(int i = 0; i < a;i++){
-				printf(set_dec[i]);
-				printf("\n");
-				printf(set_bin[i]);
-				printf("\n\n");
-			};
-			continue;
-		}
 		
 		for(int i = 0; i < buflen; i++)
 			buffer[i] = '0';
